@@ -124,7 +124,7 @@
 	
 	//*****************************************************二进制读取文件		fread fwrite 多是对二进制文件的操作 访问指针的时候是直接操作的内存
 	
-	char * r_path="E:\\c_workspace\\c_advance\\a_read.exe";
+	/*char * r_path="E:\\c_workspace\\c_advance\\a_read.exe";
 	char * w_path="E:\\c_workspace\\c_advance\\a_write.exe";
 	FILE * r_fp=fopen(r_path,"rb");
 	FILE * w_fp=fopen(w_path,"wb");
@@ -134,10 +134,22 @@
 		fwrite(buff,sizeof(char),len,w_fp);
 	}
 	fclose(r_fp);
-	fclose(w_fp);
+	fclose(w_fp);*/
 	
 	//**************************************************文件大小
+	char * r_path="E:\\c_workspace\\c_advance\\a_read.exe";
 	
+	FILE* fp=fopen(r_path,"r");
+	if(fp==NULL){
+		printf("failed");
+		return 0;
+	}
+	
+	fseek(fp,0,SEEK_END);
+	long fileSize=ftell(fp);
+	printf("文件大小是：%ld\n",fileSize);
+	
+	//***********************************************文件加解密
 	system("pause");
 	return 0;
  }
