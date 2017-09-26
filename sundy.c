@@ -35,6 +35,22 @@
 	// int (*tale)(a,b) 表示函数指针
 	
 	//**************************表达式，必须是左侧可修改的变量
+	int i=0;
+	int j=1000;
+	while(j>0){
+		i=(i++) % 10001;
+		printf("i=%d\n",i);
+		j--;
+	}
+	
+	
+	//***********************************************神奇的交换两个数据的方式
+	/*int a=10;
+	int b=20;
+	a=a^b;
+	b=a^b;
+	a=a^b;
+	printf("a=%d\n,b=%d\n",a,b);**/
 	
 	//内存：3区
 	/*程序区  保存程序的二进制文件
@@ -123,7 +139,7 @@
 	fclose(r_fp);*/
 	
 	//*****************************************************二进制读取文件		fread fwrite 多是对二进制文件的操作 访问指针的时候是直接操作的内存
-	
+	//^ 按位运算符 异或		两个一样就返回false 不一样就返回true  定义
 	/*char * r_path="E:\\c_workspace\\c_advance\\a_read.exe";
 	char * w_path="E:\\c_workspace\\c_advance\\a_write.exe";
 	FILE * r_fp=fopen(r_path,"rb");
@@ -137,7 +153,7 @@
 	fclose(w_fp);*/
 	
 	//**************************************************文件大小
-	char * r_path="E:\\c_workspace\\c_advance\\a_read.exe";
+	/*char * r_path="E:\\c_workspace\\c_advance\\a_read.exe";
 	
 	FILE* fp=fopen(r_path,"r");
 	if(fp==NULL){
@@ -147,9 +163,62 @@
 	
 	fseek(fp,0,SEEK_END);
 	long fileSize=ftell(fp);
-	printf("文件大小是：%ld\n",fileSize);
+	printf("文件大小是：%ld\n",fileSize);*/
 	
-	//***********************************************文件加解密
+	//***********************************************文件加密
+	/*char* normal_path="E:\\c_workspace\\c_advance\\write.txt";
+	char* encode_path="E:\\c_workspace\\c_advance\\write_encode.txt";
+	FILE *normal_fp=fopen(normal_path,"r");
+	FILE *encode_fp=fopen(encode_path,"w");
+	
+	int len;
+	while((len=fgetc(normal_fp))!=EOF){
+		fputc(len^7,encode_fp);
+	}
+	
+	fclose(normal_fp);
+	fclose(encode_fp);*/
+	
+	//**********************************************文件解密  主要用到的是fgetc 和fputc这两个函数  
+	/*char* encode_path="E:\\c_workspace\\c_advance\\write_encode.txt";
+	char* decode_path="E:\\c_workspace\\c_advance\\write_decode.txt";
+	FILE* encode_fp=fopen(encode_path,"r");
+	FILE* decode_fp=fopen(decode_path,"w");
+	int len;
+	while((len=fgetc(encode_fp))!=EOF){
+		fputc(len^7,decode_fp);
+	}
+	fclose(encode_fp);
+	fclose(decode_fp);*/
+	
+	//*************************************************二进制文件加密 
+	//总结：fgetc fputc 是以字节方式进行读写的  读取完毕以EOF结束    fgets fputs 这两个是以字符串的方式进行读写   fread和fwrite是以整块数据的方式进行读取  fwrite(buffer,size,count,fp);  
+	/*char * normal_path="E:\\c_workspace\\c_advance\\girl.jpg";
+	char * encode_path="E:\\c_workspace\\c_advance\\girl_encode.jpg";
+	FILE * normal_fp=fopen(normal_path,"rb");
+	FILE * encode_fp=fopen(encode_path,"wb");
+	if(normal_fp==NULL){
+		printf("normal_fp is open failed");
+		return 0;
+	}
+	if(encode_fp==NULL){
+		printf("encode_fp is open failed");
+		return 0;
+	}
+	int len;
+	char * password="LoveWeiWei";			//加密密码
+	int pwd_lenth=strlen(password);
+	printf("pwd_lenth=%d\n",pwd_lenth);
+	int i = 0;
+	while((len = fgetc(normal_fp)) != EOF){
+		fputc(len ^ password[i % pwd_lenth],encode_fp);
+		i=(i++) % 10001;		//防止i过大，超过整形最大值
+		printf("i=%d\n",i);
+	}
+	printf("读写文件结束");
+	fclose(normal_fp);
+	fclose(encode_fp);
+	printf("关闭句柄结束");*/
 	system("pause");
 	return 0;
  }
